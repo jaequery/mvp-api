@@ -7,7 +7,6 @@ import {
   PrimaryGeneratedColumn,
   Unique,
 } from 'typeorm';
-
 import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
@@ -15,6 +14,9 @@ import { ApiProperty } from '@nestjs/swagger';
 export class User {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column('jsonb', { default: ['USER'] })
+  roles: string[];
 
   @Column()
   email: string;

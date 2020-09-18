@@ -5,11 +5,13 @@ export enum AppRoles {
 }
 export const roles: RolesBuilder = new RolesBuilder();
 roles
-  .grant(AppRoles.USER) // define new or modify existing role. also takes an array.
-  .createOwn('user') // equivalent to .createOwn('video', ['*'])
-  .deleteOwn('user')
-  .grant(AppRoles.ADMIN) // switch to another role without breaking the chain
-  .extend(AppRoles.USER) // inherit role capabilities. also takes an array
-  .readAny('user')
-  .updateAny('user') // explicitly defined attributes
-  .deleteAny('user');
+  .grant(AppRoles.USER)
+  .createOwn('users')
+  .readOwn('users')
+  .updateOwn('users')
+  .deleteOwn('users')
+  .grant(AppRoles.ADMIN)
+  .extend(AppRoles.USER)
+  .readAny('users')
+  .updateAny('users')
+  .deleteAny('users');

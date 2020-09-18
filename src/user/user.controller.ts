@@ -15,6 +15,7 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
+import { ACGuard, UseRoles, UserRoles } from 'nest-access-control';
 
 import { JwtAuthGuard } from '../auth/guards/jwt.guard';
 import {
@@ -32,7 +33,12 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, ACGuard)
+  @UseRoles({
+    resource: 'users',
+    action: 'read',
+    possession: 'own',
+  })
   @ApiOperation({
     summary: 'Get users',
     description: 'Retrieve a list of users',
@@ -54,7 +60,12 @@ export class UserController {
   }
 
   @Get(':id')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard, ACGuard)
+  @UseRoles({
+    resource: 'users',
+    action: 'read',
+    possession: 'own',
+  })
   @ApiOperation({
     summary: 'Get user',
     description: 'Retrieves a user record by id',
