@@ -30,7 +30,7 @@ export class User {
   provider: UserProvider;
 
   @Column('jsonb', { default: [UserRoles.user] })
-  roles: UserRoles;
+  roles: UserRoles[];
 
   @Column()
   email: string;
@@ -77,6 +77,8 @@ export class User {
 }
 
 export class UserRegisterDto {
+  roles?: UserRoles[];
+
   @IsNotEmpty()
   @IsEmail()
   email: string;
@@ -153,6 +155,9 @@ export class UserForgotPasswordDto {
 }
 
 export class UserResetPasswordDto {
+  @IsNotEmpty()
+  accessToken: string;
+
   @IsNotEmpty()
   @MinLength(8)
   password: string;

@@ -22,7 +22,8 @@
     "task": "npx nestjs-command",
     "crud": "yarn task crud:create",
     "mocks": "yarn test mock --detectOpenHandles",
-    "docker": "docker-compose exec api"
+    "docker": "docker-compose exec api",
+    "docker:reset": "docker-compose kill; docker-compose rm -f; docker-compose up"
   },
   "dependencies": {
     "@nestjs-modules/mailer": "^1.4.2",

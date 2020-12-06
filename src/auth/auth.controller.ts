@@ -48,17 +48,13 @@ export class AuthController {
     return this.authService.forgotPassword(userForgotPassword);
   }
 
-  @Roles('$authenticated')
   @Post('reset-password')
   @ApiOperation({
     summary: 'Choose a user password',
     description: 'Sets user password with a new one',
   })
-  async resetPassword(
-    @Body() userResetPassword: UserResetPasswordDto,
-    @Req() req,
-  ) {
-    return this.authService.resetPassword(req.user, userResetPassword);
+  async resetPassword(@Body() userResetPassword: UserResetPasswordDto) {
+    return this.authService.resetPassword(userResetPassword);
   }
 
   @Get('google')

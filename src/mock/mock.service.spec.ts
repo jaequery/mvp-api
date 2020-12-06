@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { AppModule } from '../app.module';
+import { UserRoles } from '../user/user.entity';
 import { UserService } from '../user/user.service';
 
 describe('Mock initial data', () => {
@@ -14,15 +15,34 @@ describe('Mock initial data', () => {
   });
 
   it('should create a user', async () => {
+    const email = 'user@test.com';
     const user = await userService.findOne({
       where: {
-        email: 'user@test.com',
+        email,
       },
     });
     if (!user) {
       const newUser = await userService.create({
-        email: 'user@test.com',
+        email,
         password: 'password',
+      });
+      console.log('new user', newUser);
+      expect(newUser).toHaveProperty('id');
+    }
+  });
+
+  it('should create an admin', async () => {
+    const email = 'admin@test.com';
+    const user = await userService.findOne({
+      where: {
+        email,
+      },
+    });
+    if (!user) {
+      const newUser = await userService.create({
+        email,
+        password: 'password',
+        roles: ['admin', 'user'] as UserRoles[],
       });
       console.log('new user', newUser);
       expect(newUser).toHaveProperty('id');

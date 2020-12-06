@@ -11,6 +11,7 @@ import {
   UnauthorizedException,
   NotFoundException,
   InternalServerErrorException,
+  BadRequestException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
@@ -115,12 +116,17 @@ export class AuthService {
     }
   }
 
-  async resetPassword(
-    user,
-    userResetPasswordDto: UserResetPasswordDto,
-  ): Promise<User> {
+  async resetPassword(userResetPasswordDto: UserResetPasswordDto) {
     Logger.log('choosing password');
-    if (!user) throw new NotFoundException();
+
+    const { sub: userId } = this.jwtService.decode(
+      userResetPasswordDto.accessToken,
+    );
+    const user = await this.userService.findOne({ id: userId });
+    if (!user) {
+      throw new BadRequestException('invalid access token');
+    }
+
     return await this.userService.update(user.id, {
       password: userResetPasswordDto.password,
     });
