@@ -21,7 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "task": "npx nestjs-command",
     "crud": "yarn task crud:create",
-    "mock": "yarn test mock --detectOpenHandles",
+    "mocks": "yarn test mock --detectOpenHandles",
     "docker": "docker-compose exec api"
   },
   "dependencies": {

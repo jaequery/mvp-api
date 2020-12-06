@@ -12,12 +12,13 @@ import {
 import { ApiOperation } from '@nestjs/swagger';
 
 import {
-  UserChoosePasswordDto,
+  UserResetPasswordDto,
   UserForgotPasswordDto,
   UserLoginLocalDto,
   UserTokenDto,
 } from '../user/user.entity';
 import { AuthService } from './auth.service';
+import { Roles } from './decorators/roles.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -47,13 +48,17 @@ export class AuthController {
     return this.authService.forgotPassword(userForgotPassword);
   }
 
-  @Post('choose-password')
+  @Roles('$authenticated')
+  @Post('reset-password')
   @ApiOperation({
     summary: 'Choose a user password',
     description: 'Sets user password with a new one',
   })
-  async choosePassword(@Body() userChoosePassword: UserChoosePasswordDto) {
-    return this.authService.choosePassword(userChoosePassword);
+  async resetPassword(
+    @Body() userResetPassword: UserResetPasswordDto,
+    @Req() req,
+  ) {
+    return this.authService.resetPassword(req.user, userResetPassword);
   }
 
   @Get('google')

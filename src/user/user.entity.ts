@@ -152,10 +152,7 @@ export class UserForgotPasswordDto {
   email: string;
 }
 
-export class UserChoosePasswordDto {
-  @IsNotEmpty()
-  accessToken: string;
-
+export class UserResetPasswordDto {
   @IsNotEmpty()
   @MinLength(8)
   password: string;

@@ -1,7 +1,7 @@
 import * as bcrypt from 'bcrypt';
 import {
   User,
-  UserChoosePasswordDto,
+  UserResetPasswordDto,
   UserOauthProfile,
 } from './../user/user.entity';
 import { MailerService } from '@nestjs-modules/mailer';
@@ -115,16 +115,14 @@ export class AuthService {
     }
   }
 
-  async choosePassword(
-    userChoosePasswordDto: UserChoosePasswordDto,
+  async resetPassword(
+    user,
+    userResetPasswordDto: UserResetPasswordDto,
   ): Promise<User> {
     Logger.log('choosing password');
-    const user = await this.userService.findOne({
-      where: { accessToken: userChoosePasswordDto.accessToken },
-    });
     if (!user) throw new NotFoundException();
     return await this.userService.update(user.id, {
-      password: userChoosePasswordDto.password,
+      password: userResetPasswordDto.password,
     });
   }
 
