@@ -127,7 +127,7 @@ export class AuthService {
       throw new BadRequestException('invalid access token');
     }
 
-    return await this.userService.update(user.id, {
+    return this.userService.update(user.id, {
       password: userResetPasswordDto.password,
     });
   }

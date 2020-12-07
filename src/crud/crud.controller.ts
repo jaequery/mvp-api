@@ -50,7 +50,7 @@ export class CrudController {
     description: 'Creates a crud record',
   })
   async create(@Body() dto: CrudCreateDto): Promise<Crud> {
-    return await this.crudService.create(dto);
+    return this.crudService.create(dto);
   }
 
   @Patch(':id')
@@ -59,12 +59,12 @@ export class CrudController {
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: CrudUpdateDto,
   ): Promise<Crud> {
-    return await this.crudService.update(id, dto);
+    return this.crudService.update(id, dto);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete crud', description: 'Delete a crud record' })
   async remove(@Param('id', ParseIntPipe) id: number) {
-    return await this.crudService.remove(id);
+    return this.crudService.remove(id);
   }
 }

@@ -13,6 +13,11 @@ export enum UserRoles {
   user = 'user',
 }
 
+export enum UserPlans {
+  Standard = 'standard',
+  Premium = 'premium',
+}
+
 export enum UserProvider {
   facebook = 'facebook',
   google = 'google',
@@ -64,6 +69,16 @@ export class User {
 
   @Column({ nullable: true })
   picture?: string;
+
+  @Column('jsonb', {
+    default: {
+      plan: '',
+      notifications: {
+        newUser: false,
+      },
+    },
+  })
+  settings: {};
 
   @CreateDateColumn()
   createdAt: Date;
